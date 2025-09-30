@@ -1,22 +1,14 @@
-n = int(input())
+def order_calc(food:str, count:int):
+    if food == "coffee":
+        return count * 1.50
+    elif food == "coke":
+        return count * 1.40
+    elif food == "water":
+        return count * 1.00
+    elif food == "snacks":
+        return count * 2.00
 
-total = 0
-
-for i in range(n):
-    price = float(input())
-    days = int(input())
-    capsules = int(input())
-
-    # Validation
-    if price < 0.01 or price > 100.00:
-        continue
-    if days < 1 or days > 31:
-        continue
-    if capsules < 1 or capsules > 2000:
-        continue
-
-    coffee = price * days * capsules
-    total += coffee
-    print(f"The price for the coffee is: ${coffee:.2f}")
-
-print(f"Total: ${total:.2f}")
+type_food = input()
+count_ = int(input())
+result = order_calc(type_food,count_)
+print(f"{result:.2f}")
