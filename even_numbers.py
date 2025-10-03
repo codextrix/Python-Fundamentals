@@ -1,11 +1,23 @@
-n = int(input())
+# def is_even(num:int) -> bool:
+#     return num % 2 == 0
+#
+#
+# numbers_string = input().split()
+#
+# numbers = [int(number) for number in numbers_string]
+# result = list(filter(is_even, numbers))
+# print(result)
 
-for i in range(n):
-    number = int(input())
 
-    if number % 2 != 0:
-        print(f"{number} is odd!")
-        break
+def is_even(num:int) -> bool:
+    return num % 2 == 0
 
-else:
-    print("All numbers are even.")
+
+numbers_string = input().split()
+numbers = [int(number) for number in numbers_string]
+result = []
+for current_number in numbers:
+     if is_even(current_number):
+        result.append(current_number)
+
+print(result)
