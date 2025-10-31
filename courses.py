@@ -1,7 +1,16 @@
-number = int(input())
-lst = []
-for line in range(number):
-    course_name = input()
-    lst.append(course_name)
+courses = {}
 
-print(lst)
+while True:
+    line = input()
+    if line == "end":
+        break
+
+    course_name, student_name = line.split(" : ")
+    if course_name not in courses:
+        courses[course_name] = []
+    courses[course_name].append(student_name)
+
+for course_name, students in courses.items():
+    print(f"{course_name}: {len(students)}")
+    for s in students:
+        print(f"-- {s}")

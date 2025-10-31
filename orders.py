@@ -1,14 +1,20 @@
-def order_calc(food:str, count:int):
-    if food == "coffee":
-        return count * 1.50
-    elif food == "coke":
-        return count * 1.40
-    elif food == "water":
-        return count * 1.00
-    elif food == "snacks":
-        return count * 2.00
+products = {}
 
-type_food = input()
-count_ = int(input())
-result = order_calc(type_food,count_)
-print(f"{result:.2f}")
+while True:
+    command = input()
+    if command == "buy":
+        break
+
+    name, price, quantity = command.split()
+    price = float(price)
+    quantity = int(quantity)
+
+    if name not in products:
+        products[name] = {"price": price, "qty": 0}
+
+    products[name]["price"] = price
+    products[name]["qty"] += quantity
+
+for name, data in products.items():
+    total = data["price"] * data["qty"]
+    print(f"{name} -> {total:.2f}")
