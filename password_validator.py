@@ -1,32 +1,78 @@
-def check_length(some_password: str):
-    if not 6 <= len(some_password) <= 10:
-        return "Password must be between 6 and 10 characters"
+def make_upper(user_password_, index_):
+    before = user_password_[:index_]
+    after = user_password_[index_+1:]
+    new_letter = user_password_[index_].upper()
+    new_password = before + new_letter + after
+    return new_password
 
-def check_letters_and_digits(some_password: str):
-    if not some_password.isalnum():
-        return "Password must consist only of letters and digits"
+def make_lower(user_password_, index_):
+    before = user_password_[:index_]
+    after = user_password_[index_ + 1:]
+    new_letter = user_password_[index_].lower()
+    new_password = before + new_letter + after
+    return new_password
 
-def check_two_digits(some_password: str):
-    digits_counter = 0
-    for symbol in some_password:
-        if symbol.isdigit():
-            digits_counter += 1
-    if digits_counter < 2:
-        return "Password must have at least 2 digits"
+def insert(user_password_, index_,char_):
+    if 0 <= index_ <= len(user_password_):
+        before = user_password_[:index_]
+        after = user_password_[index_:]
+        new_password = before + char_ + after
+        return new_password
+    return None
 
-def validate_password(some_password: str) -> list[str]:
-    errors = []
-    for check in (check_length, check_letters_and_digits, check_two_digits):
-        result = check(some_password)
-        if result:   # only add messages, skip None
-            errors.append(result)
-    return errors
+def replace(user_password_, char_, value_):
+    if char in user_password_:
+        ascii_char = ord(char_)
+        suma = ascii_char + value_
+        new_char = chr(suma)
+        new_password = user_password_.replace(char_, new_char)
+        return new_password
+    return None
 
+user_password = input()
 
-password = input()
-validation_errors = validate_password(password)
+command = input()
 
-if not validation_errors:
-    print("Password is valid")
-else:
-    print("\n".join(validation_errors))
+while command != "Complete":
+    command = command.split()
+    action = command[0]
+
+    if action == "Make":
+        index = int(command[2])
+        if 0 <= index < len(user_password):
+
+            if command[1] == "Upper":
+                user_password = make_upper(user_password, index)
+            elif command[1] == "Lower":
+                user_password = make_lower(user_password, index)
+            print(user_password)
+
+    elif action == "Insert":
+        index = int(command[1])
+        char = command[2]
+        user_password = insert(user_password, index, char)
+        print(user_password)
+
+    elif action == "Replace":
+        char = command[1]
+        value = int(command[2])
+        user_password = replace(user_password,char, value)
+        print(user_password)
+
+    elif action == "Validation":
+        if len(user_password) < 8:
+            print("Password must be at least 8 characters long!")
+
+        if not all(ch.isalnum() or ch == "_" for ch in user_password):
+            print("Password must consist only of letters, digits and _!")
+
+        if not any(ch.isupper() for ch in user_password):
+            print("Password must consist at least one uppercase letter!")
+
+        if not any(ch.islower() for ch in user_password):
+            print("Password must consist at least one lowercase letter!")
+
+        if not any(ch.isdigit() for ch in user_password):
+            print("Password must consist at least one digit!")
+
+    command = input()
